@@ -17,7 +17,7 @@ export class Historial extends React.Component {
         return (
             <>
             <div className="contaier">
-                <div className="form_wrapper_ordenes">
+                <div className="form">
                         <table className="">
                             <thead>
                                 <tr>

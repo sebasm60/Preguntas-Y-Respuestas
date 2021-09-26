@@ -90,6 +90,9 @@ class Preguntas extends Component {
             text: deporte.pregunta,
             icon: 'question',
             input: 'select',
+            showCancelButton: true,
+            confirmButtonText: 'Validar',
+            cancelButtonText: 'Terminar',
             inputOptions: {
                 a: resDeporte[0].respuesta,
                 b: resDeporte[1].respuesta,
@@ -97,17 +100,22 @@ class Preguntas extends Component {
                 d: resDeporte[3].respuesta
             }
         }).then(isCofirmed => {
+            console.log(isCofirmed)
             if(isCofirmed.value === 'd'){
                 puntos += 100;
                 Swal.fire({
                     title: 'Success',
-                    icon: 'success'
+                    icon: 'success',
+                    text: `Has ganado 100 puntos, ahora tienes ${puntos} puntos`
                 }).then( isCofirmed => {
                     Swal.fire({
                         title: 'Arte',
                         text: arte.pregunta,
                         icon: 'question',
                         input: 'select',
+                        showCancelButton: true,
+                        confirmButtonText: 'Validar',
+                        cancelButtonText: 'Terminar',
                         inputOptions: {
                             a: resArte[0].respuesta,
                             b: resArte[1].respuesta,
@@ -119,7 +127,8 @@ class Preguntas extends Component {
                             puntos += 100;
                             Swal.fire({
                                 title: 'success',
-                                icon: 'success'
+                                icon: 'success',
+                                text: `Has ganado 100 puntos, ahora tienes ${puntos} puntos`
                             })
                             .then(isCofirmed =>{
                                 Swal.fire({
@@ -127,6 +136,9 @@ class Preguntas extends Component {
                                     text: historia.pregunta,
                                     icon: 'question',
                                     input: 'select',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Validar',
+                                    cancelButtonText: 'Terminar',
                                     inputOptions: {
                                         a: resHistoria[0].respuesta,
                                         b: resHistoria[1].respuesta,
@@ -139,7 +151,8 @@ class Preguntas extends Component {
                                         puntos += 100;
                                         Swal.fire({
                                             title: 'success',
-                                            icon: 'success'
+                                            icon: 'success',
+                                            text: `Has ganado 100 puntos, ahora tienes ${puntos} puntos`
                                         })
                                         .then(isCofirmed => {
                                             Swal.fire({
@@ -147,6 +160,9 @@ class Preguntas extends Component {
                                                 text: geografia.pregunta,
                                                 icon: 'question',
                                                 input: 'select',
+                                                showCancelButton: true,
+                                                confirmButtonText: 'Validar',
+                                                cancelButtonText: 'Terminar',
                                                 inputOptions: {
                                                     a: resGeografia[0].respuesta,
                                                     b: resGeografia[1].respuesta,
@@ -159,7 +175,8 @@ class Preguntas extends Component {
                                                     puntos+=100
                                                     Swal.fire({
                                                         title: 'success',
-                                                        icon: 'success'
+                                                        icon: 'success',
+                                                        text: `Has ganado 100 puntos, ahora tienes ${puntos} puntos`
                                                     })
                                                     .then(isCofirmed => {
                                                         Swal.fire({
@@ -167,6 +184,9 @@ class Preguntas extends Component {
                                                             text: ciencias.pregunta,
                                                             icon: 'question',
                                                             input: 'select',
+                                                            showCancelButton: true,
+                                                            confirmButtonText: 'Validar',
+                                                            cancelButtonText: 'Terminar',
                                                             inputOptions: {
                                                                 a: resCiencia[0].respuesta,
                                                                 b: resCiencia[1].respuesta,
@@ -180,57 +200,104 @@ class Preguntas extends Component {
                                                                 Swal.fire({
                                                                     title: 'Felicidades, has ganado!',
                                                                     icon: 'success',
+                                                                    text: `Has ganado 100 puntos, ahora tienes ${puntos} puntos`,
                                                                     inputLabel: 'Ingresa tu nombre',
                                                                     input: 'text'
                                                                 })
-                                                                .then(isCofirmed => {
-                                                                    
+                                                                .then(isCofirmed => {                                                                    
                                                                      axios.post('http://localhost:5000/guardar', {
                                                                         nombre : isCofirmed.value,
                                                                         puntos : puntos
                                                                     });
-                                                                })
+                                                                });
                                                             }else{
                                                                 Swal.fire({
                                                                     title: 'failure',
                                                                     icon: 'error'
-                                                                })
+                                                                });
                                                                 
-                                                            }
-                                                        })
+                                                            };
+                                                        });
+                                                    });
+                                                }else if(isCofirmed.isDismissed === true){
+                                                    Swal.fire({
+                                                        title: 'bye',
+                                                        icon: 'success',
+                                                        text: `Has ganado ${puntos} puntos`,
+                                                        inputLabel: 'Ingresa tu nombre',
+                                                        input: 'text'
                                                     })
-                                                }else{
+                                                    .then(isCofirmed =>{
+                                                        axios.post('http://localhost:5000/guardar', {
+                                                            nombre : isCofirmed.value,
+                                                            puntos : puntos
+                                                        });
+                                                    });
+                                                } else{
                                                     Swal.fire({
                                                         title: 'failure',
                                                         icon: 'error'
-                                                    })
+                                                    });
                                                 }
-                                            })
+                                            });
+                                        });
+                                    } else if(isCofirmed.isDismissed === true) {
+                                        Swal.fire({
+                                            title: 'bye',
+                                            icon: 'success',
+                                            text: `Has ganado ${puntos} puntos`,
+                                            inputLabel: 'Ingresa tu nombre',
+                                            input: 'text'
                                         })
+                                        .then(isCofirmed =>{
+                                            axios.post('http://localhost:5000/guardar', {
+                                                nombre : isCofirmed.value,
+                                                puntos : puntos
+                                            });
+                                        });   
                                     } else {
                                         Swal.fire({
                                             title: 'failure',
                                             icon: 'error'
-                                        })
-                                    }
-                                })
-                            })
-                        } else {
+                                        });
+                                    };
+                                });
+                            });
+                        } else if(isCofirmed.isDismissed === true){
                             Swal.fire({
-                                title: 'failure',
-                                icon: 'error'
+                                title: 'bye',
+                                icon: 'success',
+                                text: `Has ganado ${puntos} puntos`,
+                                inputLabel: 'Ingresa tu nombre',
+                                input: 'text'
                             })
-                        }
-                    })
-                })
+                            .then(isCofirmed =>{
+                                axios.post('http://localhost:5000/guardar', {
+                                    nombre : isCofirmed.value,
+                                    puntos : puntos
+                                });
+                            });                         
+                        } else{
+                            Swal.fire({
+                                title: 'Wrong',
+                                icon: 'error'
+                            });
+                        };
+                    });
+                });
+            }else if(isCofirmed.isDismissed === true) {
+                Swal.fire({
+                    title: 'bye',
+                    icon: 'success',
+                    text: `Has ganado ${puntos} puntos`
+                });
             } else {
                 Swal.fire({
                     title: 'Wrong',
                     icon: 'error'
-                })
-            }
-        })
-
+                });
+            };
+        });
     };
 
     render() {
